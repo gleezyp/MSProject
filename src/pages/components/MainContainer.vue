@@ -1,15 +1,15 @@
 <template>
-  <el-tabs v-model="activeTab" type="card" editable class="demo-tabs" @tab-remove="handleTabsRemove"
+  <el-tabs v-model="activeTab" type="card"  class="demo-tabs" @tab-remove="handleTabsRemove"
     @tab-change="handleTabChange">
     <el-tab-pane v-for="item in tabList" :key="item.path" :label="item.title" :name="item.path"
-      :closable="item.path != '/index'">
+      :closable="item.path != '/'">
     </el-tab-pane>
   </el-tabs>
 </template>
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
-import { useRoute, onBeforeRouteUpdate } from 'vue-router';
+import { useRoute, onBeforeRouteUpdate,onBeforeRouteLeave } from 'vue-router';
 defineProps<{ msg: string }>()
 import type { TabPaneName } from 'element-plus'
 import router from '../../router';
@@ -19,11 +19,29 @@ const activeTab = ref(route.path)
 const tabList = ref([
   {
     title: '系统盘',
-    path: '/index',
+    path: '/',
   },
 
 ])
+ onBeforeRouteLeave((to, fro) => {
+  console.log(to, "'to>>>>>99999999999>>>>>>'", fro)
+activeTab.value = to.path
+  addThisTab({
+    toTpath: to.path,
+    toTitle: to.meta.name
+  })
+ })
+onBeforeRouteUpdate((to, from) => {
+  console.log(to, "'to>>>>>>>>>>>'", from)
+  activeTab.value = to.path
+  addThisTab({
+    toTpath: to.path,
+    toTitle: to.meta.name
+  })
+})
 function addThisTab(obj: any) {
+  console.log(obj, "'>>>>>>>>>>>'")
+
   const noThisTab = tabList.value.findIndex(t => t.path == obj.toTpath) == -1
   activeTab.value = obj.toTpath
   if (noThisTab) {
@@ -35,16 +53,12 @@ function addThisTab(obj: any) {
   setCookie("tabList", JSON.stringify(tabList.value))
 }
 onMounted(() => {
+  console.log( "'to>>>>>>>>>>>'",)
+
   let tbs = getCookie("tabList")
   if (tbs) tabList.value = JSON.parse(tbs)
 })
-onBeforeRouteUpdate((to,) => {
-  activeTab.value = to.path
-  addThisTab({
-    toTpath: to.path,
-    toTitle: to.meta.name
-  })
-})
+
 const handleTabChange = (a: string) => {
   activeTab.value = a
   router.push(a)
