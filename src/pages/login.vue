@@ -5,37 +5,17 @@
         <h2 class="title">欢迎登录</h2>
         <p class="subtitle">使用您的账号登录系统</p>
       </div>
-      <el-form
-        ref="loginFormRef"
-        :model="loginForm"
-        :rules="loginRules"
-        label-position="top"
-      >
+      <el-form ref="loginFormRef" :model="loginForm" :rules="loginRules" label-position="top">
         <el-form-item prop="username">
-          <el-input
-            v-model="loginForm.username"
-            placeholder="请输入用户名"
-            :prefix-icon="User"
-            clearable
-          />
+          <el-input v-model="loginForm.username" placeholder="请输入用户名: admin" :prefix-icon="User" clearable />
         </el-form-item>
         <el-form-item prop="password">
-          <el-input
-            v-model="loginForm.password"
-            type="password"
-            placeholder="请输入密码"
-            :prefix-icon="Lock"
-            show-password
-            @keyup.enter="handleLogin"
-          />
+          <el-input v-model="loginForm.password" type="password" placeholder="请输入密码: admin" :prefix-icon="Lock"
+            show-password @keyup.enter="handleLogin" />
         </el-form-item>
         <el-form-item>
-          <el-button
-            type="primary"
-            :loading="loading"
-            class="login-button"
-            @click="handleLogin"
-          >
+          <el-button type="primary" :loading="loading" class="login-button" @click="handleLogin"
+            v-loading.fullscreen.lock="fullscreenLoading">
             登录
           </el-button>
         </el-form-item>
@@ -56,6 +36,7 @@ const router = useRouter()
 const userStore = useUserStore()
 const loginFormRef = ref()
 const loading = ref(false)
+const fullscreenLoading = ref(false)
 
 const loginForm = reactive({
   username: '',
@@ -75,19 +56,22 @@ const loginRules = {
 
 
 const handleLogin = async () => {
-  loginFormRef.value.validate( (vac: boolean) =>{
-   if(!vac){
-    return false;
-   }
-    login(loginForm.username, loginForm.password).then(re=>{
-    //跳转到首页
-    console.log(re,"<<<<<<<<---------------")
+  loginFormRef.value.validate((vac: boolean) => {
+    if (!vac) {
+      return false;
+    }
+    fullscreenLoading.value = true
+    setTimeout(() => {
+      fullscreenLoading.value = false
+    }, 2000)
+    login(loginForm.username, loginForm.password).then(re => {
+      //跳转到首页
 
-    userStore.setToken(re.data.data.token) // 存入 Pinia
-    router.push('/index')
-   }).catch(err =>{
-    console.log(err,"<<<<<<<<---------------")
-   })
+      userStore.setToken(re.data.data.token) // 存入 Pinia
+      router.push('/')
+    }).catch(err => {
+      console.log(err, "<<<<<<<<---------------")
+    })
   })
 }
 </script>
@@ -113,14 +97,14 @@ const handleLogin = async () => {
   text-align: center;
   margin-bottom: 24px;
 
-.title {
+  .title {
     font-size: 28px;
     font-weight: bold;
     color: #333;
     margin-bottom: 8px;
   }
 
-.subtitle {
+  .subtitle {
     font-size: 14px;
     color: #999;
   }

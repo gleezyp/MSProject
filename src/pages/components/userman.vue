@@ -6,7 +6,7 @@
         <el-button type="primary" size="small" icon="Plus" @click="dialogFormVisible = true">新增用户</el-button>
       </div>
     </template>
-    <el-table :data="tableData" border style="width: 100%" height="450">
+    <el-table v-loading="loading" :data="tableData" border style="width: 100%" height="450">
       <el-table-column prop="id" label="ID" width="80" />
       <el-table-column prop="username" label="姓名" />
       <el-table-column prop="email" label="邮箱" />
@@ -60,6 +60,7 @@ import { ref, onActivated, onMounted, reactive } from 'vue'
 import getUsers from '../../api/user';
 
 const tableData = ref([])
+const loading = ref(true)
 // const tableData = ref([
 //   { id: 1, name: '张三', email: 'zhangsan@example.com', role: '管理员', status: '启用' },
 //   { id: 2, name: '李四', email: 'lisi@example.com', role: '编辑', status: '启用' },
@@ -77,10 +78,12 @@ let form = reactive({
 
  function update (row: any){
   dialogFormVisible.value = true
-  console.log("////",row.target);
   form = row
 }
 onMounted (() =>{
+    setTimeout(() => {
+      loading.value = false
+    }, 2000)
   getUsers(1).then(response => {
     if(response.status == 200){
      //const getUserLis = reactive([])
