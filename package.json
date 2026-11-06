@@ -1,0 +1,38 @@
+{
+  "name": "msproject",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc -b && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@element-plus/icons-vue": "^2.3.2",
+    "@kjgl77/datav-vue3": "^1.7.4",
+    "@vueuse/core": "^10.11.0",
+    "axios": "^1.21.0",
+    "echarts": "^6.1.0",
+    "element-plus": "^2.14.7",
+    "js-cookie": "^3.0.8",
+    "pinia": "^4.1.0",
+    "pinia-plugin-persistedstate": "^4.7.1",
+    "vue": "^3.5.13",
+    "vue-router": "^4.6.4"
+  },
+  "devDependencies": {
+    "@types/js-cookie": "^3.0.6",
+    "@vitejs/plugin-vue": "^5.2.3",
+    "@vue/tsconfig": "^0.7.0",
+    "sass-embedded": "^1.107.0",
+    "typescript": "~5.8.3",
+    "vite": "^6.3.5",
+    "vue-tsc": "^2.2.8"
+  },
+  "allowScripts": {
+    "esbuild@0.25.12": true,
+    "@parcel/watcher@2.6.0": true,
+    "vue-demi@0.14.10": true
+  }
+}
