@@ -9,19 +9,25 @@ const router = createRouter({
   routes: [
     // 其中一个路由
   {
-      path: '/index',        // key
+      path: '/',        // key
       component: () => import('../pages/index.vue'),  // 组件
       children:[
       {
-         path: '/index', 
+         path: '', 
          name:'系统盘',       // key
       component: () => import('../pages/components/mainContai.vue'),  // 组件
       meta: {name: '系统盘', requiresAuth: true },  //需要路由守卫
-      },
-        {
+      }
+      ]
+    },
+    {
+      path: '/user',        // key
+      component: () => import('../pages/index.vue'),  // 组件
+      children:[
+      {
          path: 'userman',        // key
       component: () => import('../pages/components/userman.vue'),  // 组件
-      meta: {name: '用户管理页', requiresAuth: true },  //需要路由守卫
+      meta: {name: '用户管理', requiresAuth: true },  //需要路由守卫
       }
       ]
     },
@@ -29,13 +35,13 @@ const router = createRouter({
       path: '/login',        // key
       name: 'login',
       component: () => import('../pages/login.vue'),  // 组件
-       meta: {name: '项目登录页' }
+       meta: {name: '项目登录' }
     },
-      {
-         path: '/userman',        // key
-      component: () => import('../pages/components/userman.vue'),  // 组件
-      meta: {name: '用户管理页', requiresAuth: true },  //需要路由守卫
-      },
+      // {
+      //    path: '/userman',        // key
+      // component: () => import('../pages/components/userman.vue'),  // 组件
+      // meta: {name: '用户管理页', requiresAuth: true },  //需要路由守卫
+      // },
     {
       path: '/dataNow',        // key
       name: 'dataNow',

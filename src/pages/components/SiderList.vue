@@ -32,7 +32,7 @@ const route = useRouter();
 const sideMenus = [
   { "name": "系统盘",
     "icon": "location",
-    "pathna": "/index",
+    "pathna": "/",
     "child": []
   },
   { "name": "数据实时",
@@ -45,7 +45,7 @@ const sideMenus = [
     "child": [
       { "name": "客户管理",
         "icon": "Avatar",
-        "pathna": "/index/userman",
+        "pathna": "/user/userman",
         "child": []
      }
     ]
